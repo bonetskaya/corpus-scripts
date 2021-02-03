@@ -36,4 +36,3 @@ for filename in filenames:
         rus = word_tokenize(sentence_pair[0][1])
         zh = word_tokenize(sentence_pair[1][1])
         print(" ".join(rus) + " ||| " + " ".join(zh))
-
