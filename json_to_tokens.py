@@ -11,7 +11,7 @@ parser.add_argument("-t", "--tokenizer", nargs=1, type=str, help="tokenization t
 
 parser_args = parser.parse_args()
 filenames = parser_args.filenames
-tokenization = parser_args.tokenizer[0]
+tokenizer = parser_args.tokenizer[0]
 
 
 all_sentences = {}
@@ -33,7 +33,6 @@ for filename in filenames:
             continue
         if sentence_pair[0][0] != 0:
             sentence_pair = (sentence_pair[1], sentence_pair[0])
-
         rus = word_tokenize(sentence_pair[0][1])
         zh = word_tokenize(sentence_pair[1][1])
         print(" ".join(rus) + " ||| " + " ".join(zh))
