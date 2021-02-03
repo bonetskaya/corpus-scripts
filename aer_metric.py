@@ -56,7 +56,4 @@ filename_reference = parser_args.reference_alignment[0]
 prediction = get_pairs(filename_prediction)
 reference = get_pairs(filename_reference)
 
-print(prediction)
-print(reference)
-
 print(compute_aer(reference, prediction))
