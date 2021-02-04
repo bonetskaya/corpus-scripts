@@ -39,13 +39,15 @@ with open(filename, "r") as csvfile:
             aligned_sentences.append((zh_align, ru_align))
 
 
-for aligned_sentence, ru_lem_sentence in zip(aligned_sentences, ru_lem_sentences):
-    zh_sent, ru_sent = aligned_sentence
-    for i, (zh, ru) in enumerate(zip(zh_sent, ru_sent)):
-        if len(zh) == 0 or len(ru) == 0 or ru not in ru_lem_sentence:
-            continue
-        print(f"{ru_lem_sentence.index(ru) + 1}-{i + 1}", end=" ")
-    print()
+with open("pharaoh.txt", "w") as ph:
+	for aligned_sentence, ru_lem_sentence in zip(aligned_sentences, ru_lem_sentences):
+		zh_sent, ru_sent = aligned_sentence
+		for i, (zh, ru) in enumerate(zip(zh_sent, ru_sent)):
+			if len(zh) == 0 or len(ru) == 0 or ru not in ru_lem_sentence:
+				continue
+			# print(f"{ru_lem_sentence.index(ru) + 1}-{i + 1}", end=" ")
+			print(f"{ru_lem_sentence.index(ru) + 1}-{i + 1}", end=" ", sep="\n", file=ph)
+		print()
 
 with open("pairs.txt", "w") as f:
     print(*tokenized_pairs, sep="\n", file=f)
