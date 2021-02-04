@@ -3,7 +3,7 @@
 import argparse
 
 
-def get_pairs(filename: str) -> list[list[(int, int)]]:
+def get_pairs(filename):
     pairs = []
     with open(filename, "r") as f:
         for line in f:
@@ -17,7 +17,7 @@ def get_pairs(filename: str) -> list[list[(int, int)]]:
     return pairs
 
 
-def compute_precision(reference: list[list[(int, int)]], predicted: list[list[(int, int)]]) -> (int, int):
+def compute_precision(reference, predicted):
     numerator = 0
     denominator = 0
     for i in range(len(predicted)):
@@ -28,7 +28,7 @@ def compute_precision(reference: list[list[(int, int)]], predicted: list[list[(i
     return numerator, denominator
 
 
-def compute_recall(reference: list[list[(int, int)]], predicted: list[list[(int, int)]]) -> (int, int):
+def compute_recall(reference, predicted):
     numerator = 0
     denominator = 0
     for i in range(len(predicted)):
@@ -39,7 +39,7 @@ def compute_recall(reference: list[list[(int, int)]], predicted: list[list[(int,
     return numerator, denominator
 
 
-def compute_aer(reference: list[list[(int, int)]], predicted: list[list[(int, int)]]) -> float:
+def compute_aer(reference, predicted):
     precision = compute_precision(reference, predicted)
     recall = compute_recall(reference, predicted)
     return 1 - (precision[0] + recall[0]) / (precision[1] + recall[1])
