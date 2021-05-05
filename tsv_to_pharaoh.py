@@ -23,7 +23,7 @@ tokenized_pairs = []
 with open(filename, "r") as csvfile:
     for i, line in enumerate(csv.reader(csvfile, delimiter="\t", quotechar="|", quoting=csv.QUOTE_MINIMAL)):
         if i % 5 == 0:
-            ru_lem = list(filter(lambda x : not x[0].isspace(),
+            ru_lem = list(filter(lambda x: not x[0].isspace(),
                                  mystem_analyzer.lemmatize(line[0])))
             ru_lem_sentences.append(ru_lem)
             ru_tokenized = WordPunctTokenizer().tokenize(line[0])
