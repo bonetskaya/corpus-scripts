@@ -16,7 +16,7 @@ def lemmatize(filenames: list[str]):
                 ru, zh = line.split("|||")
                 ru_lem = mystem.lemmatize(ru)
                 zh_lem = mystem.lemmatize(zh)
-                print("".join(ru_lem)[:-1] + "git|||" + "".join(zh_lem)[:-1])
+                print("".join(ru_lem)[:-1] + "|||" + "".join(zh_lem)[:-1])
 
 
 parser = argparse.ArgumentParser(description="Preprocess sentences (bpe-tokenization or lemmatisation)")
