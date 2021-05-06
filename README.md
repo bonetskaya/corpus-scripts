@@ -5,7 +5,8 @@
 `json_to_tokens.py` — gets tokenized sentences from json. output example:
 
     русский ||| 中文
-
+`preprocess_sentences.py` — preprocesses sentences in format above (lemmatization, bpe)\
+`em_algorithm.py` — aligns sentences in format above
 ### requirements
 python 3.9 or higher required
 
