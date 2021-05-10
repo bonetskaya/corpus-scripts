@@ -7,23 +7,26 @@ from subword_nmt.learn_bpe import learn_bpe
 from subword_nmt.apply_bpe import BPE
 
 
-def ru_tokenize(sentence):
-    return sentence.split()
-
-
-def zh_tokenize(sentence):
-    return [sentence]
-
-
-def token_map(tokens: list[str]) -> list[str]:
+def ru_token_map(tokens: str) -> list[(int, int)]:
     result = []
     word_num = 1
-    for token in tokens:
-        result.append(str(word_num))
+    for token in tokens.split():
+        result.append(word_num)
         if not token.endswith("@@"):
             word_num += 1
 
-    return result
+    return list(enumerate(result, 1))
+
+
+def zh_token_map(tokens: str) -> list[(int, int)]:
+    result = []
+    word_num = 1
+    for token in tokens.split():
+        token = token.replace("@@", "")
+        result += [word_num] * len(token)
+        word_num += 1
+
+    return [(n, i) for i, n in (enumerate(result, 1))]
 
 
 def bpe_processing(filenames: list[str]):
@@ -35,7 +38,7 @@ def bpe_processing(filenames: list[str]):
             for line in f:
                 ru, zh = line.split(" ||| ")
                 ru_sentences.append(ru)
-                zh_sentences.append("".join(zh.split(" ")))
+                zh_sentences.append(zh.replace(" ", ""))
 
     bpe = {}
     learn_bpe(StringIO("\n".join(ru_sentences)), open('bpe_rules.ru', 'w'), num_symbols=8000)
@@ -45,11 +48,11 @@ def bpe_processing(filenames: list[str]):
 
     with open("token_map.txt", "w") as f:
         for ru, zh in zip(ru_sentences, zh_sentences):
-            ru_tokens = bpe["ru"].process_line(ru)
-            zh_tokens = bpe["zh"].process_line(zh)
-            ru_map = token_map(ru_tokens)
-            zh_map = token_map(zh_tokens)
-            print(" ".join(ru_map) + " + " + " ".join(zh_map), file=f)
+            ru_tokens = bpe["ru"].process_line(ru.strip())
+            zh_tokens = bpe["zh"].process_line(zh.strip())
+            ru_map = ru_token_map(ru_tokens)
+            zh_map = zh_token_map(zh_tokens)
+            print(*ru_map, "|||", *zh_map, file=f)
             print(ru_tokens + " ||| " + zh_tokens)
 
 
@@ -61,7 +64,7 @@ def lemmatize(filenames: list[str]):
                 ru, zh = line.split("|||")
                 ru_lem = mystem.lemmatize(ru)
                 zh_lem = mystem.lemmatize(zh)
-                print("".join(ru_lem)[:-1] + "|||" + "".join(zh_lem)[:-1])
+                print("".join(ru_lem).strip() + "|||" + "".join(zh_lem).strip())
 
 
 parser = argparse.ArgumentParser(description="Preprocess sentences (bpe-tokenization or lemmatisation)")
