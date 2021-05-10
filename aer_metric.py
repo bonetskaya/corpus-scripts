@@ -47,7 +47,7 @@ def compute_aer(reference: list[list[(int, int)]], predicted: list[list[(int, in
 
 parser = argparse.ArgumentParser(description="Count AER for two alignments.")
 parser.add_argument("-r", "--reference_alignment", nargs=1, type=str, help="filename for pharaoh reference alignment")
-parser.add_argument("-p", "--predicted_alignment", nargs=1, type=str, help="filename for pharaoh predicted alignment",)
+parser.add_argument("-p", "--predicted_alignment", nargs=1, type=str, help="filename for pharaoh predicted alignment")
 
 parser_args = parser.parse_args()
 filename_prediction = parser_args.predicted_alignment[0]
