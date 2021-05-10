@@ -5,8 +5,11 @@
 `json_to_tokens.py` — gets tokenized sentences from json. output example:
 
     русский ||| 中文
-`preprocess_sentences.py` — preprocesses sentences in format above (lemmatization, bpe)\
-`em_algorithm.py` — aligns sentences in format above
+`em_algorithm.py` — aligns sentences in format above\
+`preprocess_sentences.py` — preprocesses sentences in format above (lemmatization, bpe).
+for bpe creates `token_map.txt` to restore the alignment\
+`map_align.py` — restores the alignment using pharaoh file and `token_map.txt`
+
 ### requirements
 python 3.9 or higher required
 
