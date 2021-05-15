@@ -14,15 +14,17 @@ map_filename = parser_args.map[0]
 with open(alignment_filename, "r") as alignment_file, open(map_filename, "r") as map_file:
     for align_line, map_line in zip(alignment_file, map_file):
         ru_map, zh_map = map_line.split("|||")
-        ru_dict = {pair.split(", ")[0]: pair.split(", ")[1] for pair in ru_map.strip()[1:-1].split(") (")}
+        ru_dict = {int(pair.split(", ")[0]) - 1: int(pair.split(", ")[1]) - 1 for pair in ru_map.strip()[1:-1].split(") (")}
         zh_dict = {}
         for pair in zh_map.strip()[1:-1].split(") ("):
             k, v = pair.split(", ")
+            k, v = int(k) - 1, int(v) - 1
             zh_dict[k] = zh_dict.get(k, []) + [v]
         prev_alignment = [tuple(pair.split("-")) for pair in align_line.split()]
 
         new_alignment = set()
-        for pair in prev_alignment:
+        for p1, p2 in prev_alignment:
+            pair = int(p1), int(p2)
             new_ru = ru_dict[pair[0]]
             new_zh = zh_dict[pair[1]]
             for zh_token in new_zh:
