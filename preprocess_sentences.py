@@ -64,7 +64,7 @@ def lemmatize(filenames: list[str]):
                 ru, zh = line.split("|||")
                 ru_lem = mystem.lemmatize(ru)
                 zh_lem = mystem.lemmatize(zh)
-                print("".join(ru_lem).strip() + "||| " + "".join(zh_lem).strip())
+                print("".join(ru_lem).strip() + " ||| " + "".join(zh_lem).strip())
 
 
 parser = argparse.ArgumentParser(description="Preprocess sentences (bpe-tokenization or lemmatisation)")
